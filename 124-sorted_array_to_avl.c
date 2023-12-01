@@ -1,9 +1,11 @@
 #include "binary_trees.h"
 
 avl_t *sorted_array_to_avl(int *array, size_t size);
-avl_t *recursive_sort_array_avl(avl_t *parent, int *array, int begin, int last);
+avl_t *recursive_sort_array_avl(avl_t *parent,
+		int *array, int begin, int last);
 /**
- * recursive_sort_array_avl - Create the tree using the half element of the array.
+ * recursive_sort_array_avl - Create the tree using the
+ * half element of the array
  *
  * @parent: Parent of the node to create.
  * @array: Sorted array.
