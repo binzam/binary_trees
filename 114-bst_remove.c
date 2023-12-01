@@ -1,15 +1,17 @@
 #include "binary_trees.h"
-
-bst_t *bst_minimum(bst_t *node);
+bst_t *bst_minimum(bst_t *root);
 /**
- * bst_remove - Removes a node from a BST.
- * @root: Pointer to the root node of the tree.
- * @value: Value to remove from the tree.
- * Return: Pointer to the new root node of the tree after removal.
+ * bst_remove - removes a node from a Binary Search Tree
+ * @root: a pointer to the root node of the tree where you will remove a node
+ * @value: the value to remove in the tree
+ * Return: a pointer to the new root node of the tree after removal
+ *         NULL on failure
  */
 bst_t *bst_remove(bst_t *root, int value)
 {
-	if (root == NULL)
+	bst_t *tmp = NULL;
+
+	if (!root)
 		return (NULL);
 
 	if (value < root->n)
@@ -18,39 +20,36 @@ bst_t *bst_remove(bst_t *root, int value)
 		root->right = bst_remove(root->right, value);
 	else
 	{
-		if (root->left == NULL)
+		if (!root->left)
 		{
-			bst_t *temp = root->right;
+			tmp = root->right;
 			free(root);
-			return (temp);
+			return (tmp);
 		}
-		else if (root->right == NULL)
+		else if (!root->right)
 		{
-			bst_t *temp = root->left;
+			tmp = root->left;
 			free(root);
-			return (temp);
+			return (tmp);
 		}
-
-		bst_t *successor = bst_minimum(root->right);
-		root->n = successor->n;
-		root->right = bst_remove(root->right, successor->n);
+		tmp = bst_minimum(root->right);
+		root->n = tmp->n;
+		root->right = bst_remove(root->right, tmp->n);
 	}
-
 	return (root);
 }
 
 /**
- * bst_minimum - Finds the minimum node in a BST.
- * @node: Pointer to the root node of the tree.
- * Return: Pointer to the minimum node in the tree.
+ * bst_minimum - finds the smallest node from a Binary Search Tree
+ * @root: a pointer to the root node of the tree
+ * Return: a pointer to the smallest node
  */
-bst_t *bst_minimum(bst_t *node)
+bst_t *bst_minimum(bst_t *root)
 {
-	if (node == NULL)
-		return (NULL);
+	bst_t *min = root;
 
-	while (node->left != NULL)
-		node = node->left;
+	while (min->left)
+		min = min->left;
 
-	return (node);
+	return (min);
 }
